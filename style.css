@@ -14,9 +14,6 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-body {}
-
-
 .container {
     position: relative;
     max-width: 900px;
@@ -154,4 +151,37 @@ body {}
     background-position: center;
     width: 100%;
     height: 100%;
+}
+
+@media (width < 900px) {
+    .card {
+        width: 150px;
+        height: 200px;
+    }
+}
+
+@media (width < 500px) {
+    .title {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+
+    #timer {
+        font-size: 14px;
+    }
+
+    .wrapper {
+        row-gap: 5px;
+    }
+
+    .card {
+        width: 100px;
+        height: 150px;
+    }
+
+    .button {
+        font-size: 12px;
+        padding: 5px 10px;
+
+    }
 }

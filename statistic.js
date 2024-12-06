@@ -13,8 +13,6 @@ export const getCurrentTime = () => {
 const chekBestTime = () => {
     const keys = Object.entries(localStorage);
     const time = toString(getResultTime());
-    console.log(typeof time);
-    console.log(typeof keys[0][0]);
 
     if (time in keys) {
         return true
