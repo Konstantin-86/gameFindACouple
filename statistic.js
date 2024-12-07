@@ -10,36 +10,8 @@ export const getCurrentTime = () => {
     const currentTime = `${hours}:${minutes}:${seconds}`;
     return currentTime;
 }
-const chekBestTime = () => {
-    const keys = Object.entries(localStorage);
-    const time = toString(getResultTime());
 
-    if (time in keys) {
-        return true
-    }
-    return false
-}
-
-export const setStorage = () => {
-    const neverGiveUp = chekBestTime();
-
-    if (!neverGiveUp) {
-        const time = getResultTime();
-        const currentTime = getCurrentTime();
-        localStorage.setItem(time, currentTime);
-        console.log("записал новые данные");
-    }
-}
-
-export const getAllStorage = () => {
-    const keys = Object.entries(localStorage);
-    const time = getResultTime();
-    const neverGiveUp = chekBestTime();
-    console.log(keys);
-
-    if (keys.length === 1) return timer.textContent = `Ваше время - ${time} секунд. Попробуйте улучшить его!)`;
-
-
+const getBestResult = (keys, currentResult, resultTime) => {
     let bestTime = keys[0][0];
     let indexNumber = 0
 
@@ -50,18 +22,43 @@ export const getAllStorage = () => {
         }
     }
     const bestTimeinStorage = keys[indexNumber];
-    console.log("neverGiveUp", neverGiveUp);
-    console.log("time", time);
+    console.log(bestTimeinStorage);
 
-    if (neverGiveUp) {
-        timer.textContent = `Вы повторили свое лучшее время - ${time} секунд`;
-        return
-    } else if (time < bestTimeinStorage[0]) {
-        timer.textContent = `Вы улучшили свое лучшее время!!! Новый рекорд - ${time} секунд`;
+    if (bestTimeinStorage[0] == resultTime) {
+        timer.textContent = `Вы повторили свое лучшее время - ${currentResult[0]} секунд`;
+
+    } else if (bestTimeinStorage[0] > currentResult[0]) {
+        console.log("улучшил результат");
+        timer.textContent = `Вы улучшили свое лучшее время!!! Новый рекорд - ${currentResult[0]} секунд`;
+        try {
+            localStorage.setItem(bestTimeinStorage[0], bestTimeinStorage[1]);
+            console.log("Данные успешно записаны в localStorage");
+        } catch (error) {
+            console.error("Ошибка при записи в localStorage:", error);
+        }
+
     } else {
+        console.log("лучший  результат");
         bestTimeTitle.classList.remove('hidden');
-        timer.textContent = `Ваше время - ${time} секунд`;
+        timer.textContent = `Ваше время - ${currentResult[0]} секунд`;
         bestTimeTitle.textContent = `Ваше лучшее время ${bestTimeinStorage[0]} секунд, дата ${bestTimeinStorage[1]}`;
+        localStorage.setItem(currentResult[0], currentResult[1]);
+
     }
+}
+
+
+export const chekStorage = () => {
+    const keys = Object.entries(localStorage);
+    const resultTime = getResultTime();
+    const currentTime = getCurrentTime();
+    const currentResult = [resultTime, currentTime];
+
+    if (keys.length === 0) {
+        timer.textContent = `Ваше время - ${resultTime} секунд. Попробуйте улучшить его!)`
+        localStorage.setItem(resultTime, currentTime);
+        return;
+    }
+    getBestResult(keys, currentResult, resultTime);
 
 }
