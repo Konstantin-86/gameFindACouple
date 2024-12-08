@@ -11,7 +11,7 @@ export const getCurrentTime = () => {
     return currentTime;
 }
 
-const getBestResult = (keys, currentResult, resultTime) => {
+const getBestResult = (keys, currentResult) => {
     let bestTime = keys[0][0];
     let indexNumber = 0
 
@@ -22,26 +22,18 @@ const getBestResult = (keys, currentResult, resultTime) => {
         }
     }
     const bestTimeinStorage = keys[indexNumber];
-    console.log(bestTimeinStorage);
 
-    if (bestTimeinStorage[0] == resultTime) {
-        timer.textContent = `Вы повторили свое лучшее время - ${currentResult[0]} секунд`;
+    if (bestTimeinStorage[0] == currentResult[0]) {
+        timer.textContent = `Ты повторил свое лучшее время - ${currentResult[0]} секунд`;
 
     } else if (bestTimeinStorage[0] > currentResult[0]) {
-        console.log("улучшил результат");
-        timer.textContent = `Вы улучшили свое лучшее время!!! Новый рекорд - ${currentResult[0]} секунд`;
-        try {
-            localStorage.setItem(bestTimeinStorage[0], bestTimeinStorage[1]);
-            console.log("Данные успешно записаны в localStorage");
-        } catch (error) {
-            console.error("Ошибка при записи в localStorage:", error);
-        }
+        timer.textContent = `Ты улучшил свое лучшее время!!! Новый рекорд - ${currentResult[0]} секунд`;
+        localStorage.setItem(currentResult[0], currentResult[1]);
 
     } else {
-        console.log("лучший  результат");
         bestTimeTitle.classList.remove('hidden');
-        timer.textContent = `Ваше время - ${currentResult[0]} секунд`;
-        bestTimeTitle.textContent = `Ваше лучшее время ${bestTimeinStorage[0]} секунд, дата ${bestTimeinStorage[1]}`;
+        timer.textContent = `Твое время - ${currentResult[0]} секунд`;
+        bestTimeTitle.textContent = `Лучшее время ${bestTimeinStorage[0]} секунд, дата ${bestTimeinStorage[1]}`;
         localStorage.setItem(currentResult[0], currentResult[1]);
 
     }
@@ -49,16 +41,18 @@ const getBestResult = (keys, currentResult, resultTime) => {
 
 
 export const chekStorage = () => {
-    const keys = Object.entries(localStorage);
+    const keys = Object.entries(localStorage).sort();
+    const filteredKeys = keys.filter(item => item[0] !== "name" && item[0] !== "--main-color");
+
     const resultTime = getResultTime();
     const currentTime = getCurrentTime();
     const currentResult = [resultTime, currentTime];
 
-    if (keys.length === 0) {
-        timer.textContent = `Ваше время - ${resultTime} секунд. Попробуйте улучшить его!)`
+    if (filteredKeys.length === 0) {
+        timer.textContent = `Твое время - ${resultTime} секунд. Попробуй улучшить его!)`
         localStorage.setItem(resultTime, currentTime);
         return;
     }
-    getBestResult(keys, currentResult, resultTime);
+    getBestResult(filteredKeys, currentResult);
 
 }

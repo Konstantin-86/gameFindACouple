@@ -46,6 +46,7 @@
 .title {
     text-align: center;
     margin: 20px 0;
+    user-select: none
 }
 
 #canvas {
@@ -77,6 +78,7 @@
     min-height: 50px;
     flex-direction: column;
     row-gap: 15px;
+    user-select: none
 }
 
 .wrapper p {
@@ -166,21 +168,41 @@
     font-size: 16px;
     color: var(--main-color);
     z-index: 101;
+    user-select: none;
+    cursor: pointer;
+}
+
+.cur-name::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    width: 0;
+    height: 1px;
+    background-color: var(--main-color);
+    z-index: 102;
+    transition: all 0.3s;
+}
+
+.cur-name:hover::after {
+    width: 80%;
 }
 
 .statistics-list {
     position: absolute;
     width: 100%;
-    min-height: 50dvh;
+    min-height: 52dvh;
     top: 0;
     left: -100%;
-    padding: 10px;
+    padding-top: 70px;
+    padding-left: 20px;
     font-size: 16px;
     background: linear-gradient(90deg, rgba(31, 118, 177, 1) 70%, rgba(255, 255, 255, 0) 100%);
     transition: all 0.3s;
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
+    user-select: none;
     z-index: 100;
 }
 
@@ -194,7 +216,10 @@
 .statistic-item {
     display: flex;
     gap: 10px;
+    font-size: 14px;
+
 }
+
 
 .settings {
     position: absolute;
@@ -207,11 +232,12 @@
     border: none;
     background: transparent;
     z-index: 101;
+    user-select: none
 }
 
 .settings:hover {
     rotate: 15deg;
-    /* transform: scale(1.1); */
+    transform: scale(1.1);
 }
 
 .setting-box {
@@ -221,13 +247,12 @@
     width: 100%;
     min-height: 50dvh;
     background: linear-gradient(270deg, rgba(31, 118, 177, 1) 70%, rgba(255, 255, 255, 0) 100%);
-
     display: flex;
     flex-direction: column;
     gap: 10px;
     justify-content: center;
-    align-items: center;
-
+    align-items: end;
+    padding-right: 50px;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -240,6 +265,34 @@
     opacity: 1;
     visibility: visible;
     pointer-events: all;
+}
+
+.name-input {
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    background-color: #bebaba;
+    transition: all 0.3s;
+}
+
+.name-input:hover {
+    background-color: #e9e4e4;
+}
+
+.name-input:focus {
+    background-color: #fff;
+}
+
+label {
+    margin-right: 15px;
+}
+
+.color-input {
+    border: none;
+    inline-size: 100px;
+    block-size: 30px;
+    border-radius: 7px;
 }
 
 .settings img {
@@ -267,9 +320,17 @@
         width: 150px;
         height: 200px;
     }
+
+    .statistics-list {
+        min-height: 65dvh;
+    }
 }
 
 @media (width < 500px) {
+    .statistics-list {
+        min-height: 70dvh;
+    }
+
     .main-wrap {
         justify-content: center;
     }

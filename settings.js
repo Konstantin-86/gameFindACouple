@@ -31,8 +31,6 @@ function checkName() {
 
 
 function checkColor() {
-    console.log(colorInStorage);
-
     if (colorInStorage) {
         root.style.setProperty('--main-color', colorInStorage)
         colorPicker.value = colorInStorage
@@ -86,6 +84,13 @@ function checkStorage() {
     delete allData["name"];
     delete allData["--main-color"];
     const array = Object.entries(allData);
+
+    if (array.length === 0) {
+        const li = document.createElement("li");
+        li.classList.add("statistic-item");
+        li.textContent = `Ты еще не играл`;
+        statisticsList.appendChild(li);
+    }
 
     array.forEach((item) => {
         const li = document.createElement("li");
