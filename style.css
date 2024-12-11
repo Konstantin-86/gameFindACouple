@@ -1,7 +1,9 @@
 @import url('./node_modules/animate.css/animate.min.css');
 
 :root {
-    --main-color: #1f76b1;
+    --main-color: #B43E45;
+    --button-color: #B43E45;
+    --button-hover: #659591;
 }
 
 * {
@@ -9,6 +11,13 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-image: url(./images/i_have_a_questionnaire_on_the_topic_of_guess_the_cards_you_need_a_suitable_background_childrens_the_pckdis7tk95o35dlojw0_1.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .container {
@@ -24,16 +33,19 @@
 
 .button {
     padding: 10px 20px;
-    background-color: #fff;
+    /* background-color: #fff; */
     border-radius: 5px;
-    border: 2px solid #231888;
+    border: 2px solid var(--button-color);
+    background-color: var(--button-color);
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s;
+    user-select: none;
 }
 
 .button:hover {
-    background-color: #231888;
+    background-color: var(--button-hover);
+    border: 2px solid var(--button-hover);
     color: #fff;
 }
 
@@ -116,6 +128,7 @@
     font-size: 1.5em;
     color: white;
     border-radius: 7px;
+    background-color: #fff;
 }
 
 .card-front {
@@ -165,27 +178,18 @@
     top: 10px;
     left: 10px;
     padding: 10px;
-    font-size: 16px;
-    color: var(--main-color);
+    font-size: 20px;
+    font-weight: 700;
     z-index: 101;
     user-select: none;
     cursor: pointer;
+    transition: color 0.3s;
 }
 
-.cur-name::after {
-    content: '';
-    position: absolute;
-    bottom: 5px;
-    left: 10px;
-    width: 0;
-    height: 1px;
-    background-color: var(--main-color);
-    z-index: 102;
-    transition: all 0.3s;
-}
 
-.cur-name:hover::after {
-    width: 80%;
+
+.cur-name:hover {
+    color: #fff;
 }
 
 .statistics-list {
